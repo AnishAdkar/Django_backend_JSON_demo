@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Graph Generator</title>
+    <link rel="stylesheet" href="static/home_json.css">
+</head>
+<body>
+    <div class="container">
+        <h1>JSON Graph Generator</h1>
+        <p>Please only enter valid data link handled by C-DAC.</p>
+        <form id="linkForm">
+            <input type="url" id="weblink" placeholder="Enter the link here" required>
+            <button type="submit">Proceed</button> <br> </br>
+        </form>
+        <p>This is a placeholder paragraph.</p>
+        <p>You can replace this text with your own content.</p>
+        <p>It should contain four lines.</p>
+        <p>Feel free to edit or update as needed.</p>
+    </div>
+
+    <script>
+        document.getElementById('linkForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const weblink = document.getElementById('weblink').value;
+            localStorage.setItem('weblink', weblink);
+            window.location.href = '/graph';
+        });
+    </script>
+</body>
+</html>
