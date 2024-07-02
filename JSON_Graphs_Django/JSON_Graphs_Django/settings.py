@@ -117,6 +117,7 @@ USE_TZ = True
 
 #Added Manually Later on
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "JSON_graph_generator/static",
