@@ -20,4 +20,7 @@ from django.urls import path , include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('JSON_graph_generator.urls')),
+    path('graph/', include('JSON_graph_generator.urls2')),
+    path('exit/', include('JSON_graph_generator.urls3')),
+    path('home/', include('JSON_graph_generator.urls')),
 ]
