@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
+from JSON_graph_generator import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('JSON_graph_generator.urls')),
-    path('graph/', include('JSON_graph_generator.urls2')),
-    path('exit/', include('JSON_graph_generator.urls3')),
-    path('home/', include('JSON_graph_generator.urls')),
+    path('', views.fun1, name='home page'),
+    path('home/graph', views.fun2, name = "Graph page"),
+    path('home/exit/done', views.fun3, name = "exit page"),
+    path('restart/', views.fun1, name = "home page"),
+    path('restart/home/graph', views.fun2, name = "Graph page"),
+    path('restart/home/exit/done', views.fun3, name = "exit page"),
 ]

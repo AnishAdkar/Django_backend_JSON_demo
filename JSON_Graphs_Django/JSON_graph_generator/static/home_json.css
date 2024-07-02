@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('home_json_back.png') no-repeat center center fixed;
+    background: url('static/home_json_back.png') no-repeat center center fixed;
     background-size: cover;
     color: white;
 }
