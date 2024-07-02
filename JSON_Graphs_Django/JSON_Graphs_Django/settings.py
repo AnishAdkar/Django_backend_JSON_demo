@@ -54,7 +54,7 @@ ROOT_URLCONF = 'JSON_Graphs_Django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / "JSON_graph_generator/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,9 +117,10 @@ USE_TZ = True
 
 #Added Manually Later on
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "JSON_graph_generator/static",
 ]
 
 # Default primary key field type

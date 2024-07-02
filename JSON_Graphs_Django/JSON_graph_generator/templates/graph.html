@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Graph</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f9;
+        }
+        
+        .container {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .header {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .header button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .header button:hover {
+            background-color: #0056b3;
+        }
+        
+        p {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            margin-top: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button onclick="window.location.href='exit/done'">Exit</button>
+            <button onclick="window.location.href='/restart'">Try Another Link</button>
+        </div>
+        <p>Dynamic Graph</p>
+        <p id="displayLink"></p>
+        <canvas id="myChart" width="400" height="200" style="margin-top: 20px;"></canvas>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            const weblink = localStorage.getItem('weblink');
+            const displayLink = document.getElementById('displayLink');
+
+            if (weblink) {
+
+                // Initialize an empty chart
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [], // X-axis labels
+                        datasets: [{
+                            label: 'CPU Utilization v/s Timestamp',
+                            data: [], // Y-axis data
+                            borderColor: 'rgb(255, 25, 37)',
+                            backgroundColor: 'rgb(212, 250, 247)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Time'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'CPU Utilization'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                function fetchDataAndDisplay() {
+                    fetch(weblink)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.data && Array.isArray(data.data[0])) {
+                                const timestamp = data.data[0][0];
+                                const cpuUtilization = data.data[0][1];
+
+                                myChart.data.labels.push(timestamp);
+                                myChart.data.datasets[0].data.push(cpuUtilization);
+                                myChart.update();
+
+                                const maxDataPoints = 8;
+                                if (myChart.data.labels.length > maxDataPoints) {
+                                    myChart.data.labels.shift();
+                                    myChart.data.datasets[0].data.shift();
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Fetch error:', error);
+                        });
+                }
+
+                fetchDataAndDisplay();
+                setInterval(fetchDataAndDisplay, 1000);
+            } else {
+                displayLink.textContent = 'No link was provided.';
+            }
+        });
+    </script>
+</body>
+</html>

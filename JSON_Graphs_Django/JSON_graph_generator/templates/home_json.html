@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Graph Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('static/home_json_back.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(52, 48, 48, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(142, 138, 138, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1, p, form {
+            margin-bottom: 20px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        form input[type="url"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+        
+        form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        form button:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JSON Graph Generator</h1>
+        <p>Please only enter valid data link handled by C-DAC.</p>
+        <form id="linkForm">
+            <input type="url" id="weblink" placeholder="Enter the link here" required>
+            <button type="submit">Proceed</button> <br> </br>
+        </form>
+        <p>This is a placeholder paragraph.</p>
+        <p>You can replace this text with your own content.</p>
+        <p>It should contain four lines.</p>
+        <p>Feel free to edit or update as needed.</p>
+    </div>
+
+    <script>
+        document.getElementById('linkForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const weblink = document.getElementById('weblink').value;
+            localStorage.setItem('weblink', weblink);
+            window.location.href = 'home/graph';
+            
+        });
+    </script>
+</body>
+</html>
