@@ -7,4 +7,4 @@ def fun2(request):
     return render(request, "graph.html")
 
 def fun3(request):
-    return render(request, "home_json.html")
+    return render(request, "exit.html")
