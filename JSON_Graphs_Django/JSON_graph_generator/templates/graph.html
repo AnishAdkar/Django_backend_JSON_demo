@@ -110,7 +110,12 @@
                     }
                 });
 
-                function fetchDataAndDisplay() {
+                // Initialize a queue to manage fetch requests
+                const fetchQueue = [];
+
+            function fetchDataAndDisplay() {
+                // Push the fetch request into the queue
+                fetchQueue.push(
                     fetch(weblink)
                         .then(response => {
                             if (!response.ok) {
@@ -136,11 +141,32 @@
                         })
                         .catch(error => {
                             console.error('Fetch error:', error);
-                        });
+                        })
+                        );
+
+                    // Process fetch requests sequentially
+                    if (fetchQueue.length === 1) {
+                        processQueue();
+                    }
                 }
 
-                fetchDataAndDisplay();
-                setInterval(fetchDataAndDisplay, 1000);
+        function processQueue() {
+            // Dequeue and execute the fetch request
+            const fetchPromise = fetchQueue[0];
+            fetchPromise.then(() => {
+                // Remove the processed request from the queue
+                fetchQueue.shift();
+
+                // Process the next request (if any)
+                if (fetchQueue.length > 0) {
+                    processQueue();
+                }
+            });
+        }
+
+
+            fetchDataAndDisplay();
+            setInterval(fetchDataAndDisplay, 1000);
             } else {
                 displayLink.textContent = 'No link was provided.';
             }
